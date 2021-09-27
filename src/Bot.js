@@ -53,6 +53,7 @@ export default class Bot extends Discord.Client {
   }
 
   async checkHooks(event, ...args) {
+    if (!this.hooks[event]) return true;
     const done = [];
     for (const hook of this.hooks[event]) {
       done.push(await hook(...args));
