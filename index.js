@@ -1,4 +1,4 @@
-import Discord from 'discord.js-light';
+import Discord from 'discord.js';
 
 import Bot from './src/Bot.js';
 import Command from './src/Command.js';

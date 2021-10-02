@@ -1,4 +1,4 @@
-import Discord from 'discord.js-light';
+import Discord from 'discord.js';
 
 export default class CommandFlags extends Discord.BitField {
   constructor(bits) {

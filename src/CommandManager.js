@@ -1,4 +1,4 @@
-import Discord from 'discord.js-light';
+import Discord from 'discord.js';
 import FZ from 'file-ez';
 
 export default class CommandManager {

@@ -1,5 +1,5 @@
 import CommandFlags from "./CommandFlags.js";
-import Discord from "discord.js-light";
+import Discord from "discord.js";
 
 export default class Command {
   constructor(data) {
