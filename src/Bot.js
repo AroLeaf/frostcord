@@ -1,4 +1,4 @@
-import Discord from 'discord.js-light';
+import Discord from 'discord.js';
 import CommandManager from './CommandManager.js';
 
 export default class Bot extends Discord.Client {
