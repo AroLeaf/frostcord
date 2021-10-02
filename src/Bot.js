@@ -29,7 +29,7 @@ export default class Bot extends Discord.Client {
   }
 
   async _onMessageCreate(message) {
-    if (!await this.checkHooks(message)) return;
+    if (!await this.checkHooks('message', message)) return;
 
     const prefix = await this.prefix(message);
     if (message.author.bot || !message.content.startsWith(prefix)) return;
