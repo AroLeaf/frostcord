@@ -10,8 +10,8 @@ export default class Bot extends Discord.Client {
 
       if (options.commands) this.commands = await new CommandManager(this, options.commands);
       
-      this.once('ready', this._onReady || options.onReady);
-      this.on('messageCreate', this._onMessageCreate) || options.onMessageCreate;
+      this.once('ready', options.onReady || this._onReady);
+      this.on('messageCreate', options.onMessageCreate || this._onMessageCreate);
 
       res(this);
     });
