@@ -9,12 +9,15 @@ export default class Bot extends Discord.Client {
       this.owner = options.owner;
 
       if (options.commands) this.commands = await new CommandManager(this, options.commands);
-      
-      this.once('ready', options.onReady || this._onReady);
-      this.on('messageCreate', options.onMessageCreate || this._onMessageCreate);
 
       res(this);
     });
+  }
+
+  async login(token) {
+    if (!this.listenerCount('messageCreate')) this.on('messageCreate', this._onMessageCreate);
+    if (!this.listenerCount('ready')) this.once('ready', this._onReady);
+    return super.login(token);
   }
 
   async prefix(...args) {
