@@ -4,7 +4,7 @@ import MessageContent from './MessageContent.js';
 import EmbedFactory from './EmbedFactory.js';
 
 export default class Bot extends Discord.Client {
-  constructor(options) {
+  constructor(options={}) {
     return new Promise(async (res) => {
       super(options);
       this._prefix = options.prefix;

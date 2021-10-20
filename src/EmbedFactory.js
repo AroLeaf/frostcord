@@ -1,7 +1,7 @@
 import MessageContent from './MessageContent.js';
 import XRegExp from 'xregexp';
 export default class EmbedFactory {
-  constructor(options) {
+  constructor(options={}) {
     this.splashes = options.splashes;
     this.color = options.color;
   }
