@@ -1,5 +1,7 @@
 import Discord from 'discord.js';
 import CommandManager from './CommandManager.js';
+import MessageContent from './MessageContent.js';
+import EmbedFactory from './EmbedFactory.js';
 
 export default class Bot extends Discord.Client {
   constructor(options) {
@@ -7,7 +9,8 @@ export default class Bot extends Discord.Client {
       super(options);
       this._prefix = options.prefix;
       this.owner = options.owner;
-
+      
+      this.embeds = new EmbedFactory(options.embeds);
       if (options.commands) this.commands = await new CommandManager(this, options.commands);
 
       res(this);
@@ -31,11 +34,19 @@ export default class Bot extends Discord.Client {
 
   async _onMessageCreate(message) {
     const prefix = await this.prefix(message);
-    if (message.author.bot || !message.content.startsWith(prefix)) return;
+    if (message.author.bot || !message.content.startsWith(prefix)) {
+      if (RegExp(`<@!?${this.user.id}>`).test(message.content)) message.channel.send({ embeds: [{ description: `My prefix is \`${prefix}\`` }]});
+      return;
+    };
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = this.commands.resolve(args.shift());
     if (!command) return;
 
-    return command.run(message, args).catch(console.log);
+    try {
+      const res = await command.run(message, args);
+      if (res instanceof MessageContent) return message.channel.send(res.toMsg());
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

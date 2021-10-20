@@ -5,6 +5,7 @@ export default class Command {
   constructor(data) {
     this.name = data.name;
     this.description = data.description||'';
+    this.aliases = data.aliases;
     this.flags = new CommandFlags(data.flags).freeze();
     this.permissions = {
       self: new Discord.Permissions(data.permissions?.self).freeze(),
