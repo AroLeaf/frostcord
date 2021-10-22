@@ -2,8 +2,8 @@ import Discord from 'discord.js';
 import MessageContent from './MessageContent.js';
 import XRegExp from 'xregexp';
 
-Discord.Message.prototype.embed = data => { return this.client.embeds.create(data) }
-Discord.Message.prototype.markdown = data => { return this.client.embeds.markdown(data) }
+Discord.Message.prototype.embed = function (data) { return this.client.embeds.create(data) }
+Discord.Message.prototype.markdown = function (data) { return this.client.embeds.markdown(data) }
 
 export default class EmbedFactory {
   constructor(options={}) {
