@@ -8,7 +8,7 @@ export default class Bot extends Discord.Client {
     return new Promise(async (res) => {
       super(options);
       this._prefix = options.prefix;
-      this.owner = options.owner;
+      this.owners = options.owners ?? [options.owner];
       
       this.embeds = new EmbedFactory(options.embeds);
       if (options.commands) this.commands = await new CommandManager(this, options.commands);

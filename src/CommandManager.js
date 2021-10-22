@@ -9,6 +9,7 @@ export default class CommandManager {
       for (const file of await FZ.getDir(path).getDeep()) {
         const cmd = await import(file.toString()).then(mod=>mod.default).catch(console.log);
         if (!cmd) return;
+        cmd.path = file.toString();
         this.cache.set(cmd.name, cmd);
       }
       res(this);

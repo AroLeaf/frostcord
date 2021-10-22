@@ -1,5 +1,6 @@
 import CommandFlags from "./CommandFlags.js";
 import Discord from "discord.js";
+import Path from 'path';
 
 export default class Command {
   constructor(data) {
@@ -12,6 +13,10 @@ export default class Command {
       user: new Discord.Permissions(data.permissions?.user).freeze(),
     }
     this.function = data.run;
+  }
+
+  get category() {
+    return this.path ? Path.basename(Path.dirname(this.path)) : undefined;
   }
 
   async run(message, args) {

@@ -1,13 +1,24 @@
+import Discord from 'discord.js';
 import MessageContent from './MessageContent.js';
 import XRegExp from 'xregexp';
+
+Discord.Message.prototype.embed = data => { return this.client.embeds.create(data) }
+Discord.Message.prototype.markdown = data => { return this.client.embeds.markdown(data) }
+
 export default class EmbedFactory {
   constructor(options={}) {
     this.splashes = options.splashes;
     this.color = options.color;
   }
 
+  randomSplash() {
+    return this.splashes?.length ? this.splashes[Math.floor(Math.random()*this.splashes.length)] : undefined;
+  }
+
   create(data) {
-    return MessageContent.embed({
+    return typeof data == 'string'
+    ? this.create({ description: data }) 
+    : MessageContent.embed({
       author: data.author,
       title: data.title,
       url: data.url,
@@ -21,11 +32,7 @@ export default class EmbedFactory {
     });
   }
 
-  randomSplash() {
-    return this.splashes?.length ? this.splashes[Math.floor(Math.random()*this.splashes.length)] : undefined;
-  }
-
-  fromMD(markdown) {
+  markdown(markdown) {
     const regex = {
       meta: XRegExp('^[^\\S\\r\\n]*::([^]*)', 'm'),
       image: XRegExp('img:([^\\s]*)'),
