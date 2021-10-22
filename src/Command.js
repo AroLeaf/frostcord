@@ -20,7 +20,7 @@ export default class Command {
   }
 
   async run(message, args) {
-    if (this.flags.has(1<<0) && message.author.id !== message.client.owner) return;
+    if (this.flags.has(1<<0) && !message.client.owners.includes(message.author.id)) return;
     if (this.flags.has(1<<1) && !message.guild) return;
     
     if (!message.member.permissionsIn(message.channel).has(this.permissions.user)) return console.log('user missing permission(s)');;
