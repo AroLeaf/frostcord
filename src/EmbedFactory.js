@@ -61,7 +61,7 @@ export default class EmbedFactory {
       icon_url: authorMatch?.groups.imagea,
     }
   
-    const parts = body.split(regex.parts);
+    const parts = body.split(regex.parts).slice(1);
   
     const titleMatch = XRegExp.exec(parts.shift(), regex.title);
     const title = titleMatch.groups.texta || titleMatch.groups.textb;
