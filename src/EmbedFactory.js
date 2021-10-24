@@ -5,6 +5,20 @@ import XRegExp from 'xregexp';
 Discord.Message.prototype.embed = function (data) { return this.client.embeds.create(data) }
 Discord.Message.prototype.markdown = function (data) { return this.client.embeds.markdown(data) }
 
+const regex = {
+  meta: XRegExp('^[^\\S\\r\\n]*::([^]*)', 'm'),
+  image: XRegExp('img:([^\\s]*)'),
+  thumbnail: XRegExp('tmb:([^\\s]*)'),
+  color: XRegExp('clr:0x([0-9a-f]+)'),
+  timestamp: XRegExp('tm:(\\d+)'),
+
+  parts: XRegExp('^[^\\S\\r\\n]*#', 'm'),
+  url: XRegExp('\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*)'),
+  author: XRegExp('^!\\[(\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*))\\]\\((?<imagea>.*)\\)|^(\\[(?<textc>.*)\\]\\((?<urlb>.*)\\)|(?<textd>.*))', 'n'),
+  title: XRegExp(`^ (\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*))\\n[^\\S\\r\\n]*(?<bodya>[^]*)`, 'n'),
+  field: XRegExp('(?<=.)(.*)\\n[^\\S\\r\\n]*([^]*)'),
+}
+
 export default class EmbedFactory {
   constructor(options={}) {
     this.splashes = options.splashes;
@@ -33,20 +47,6 @@ export default class EmbedFactory {
   }
 
   markdown(markdown) {
-    const regex = {
-      meta: XRegExp('^[^\\S\\r\\n]*::([^]*)', 'm'),
-      image: XRegExp('img:([^\\s]*)'),
-      thumbnail: XRegExp('tmb:([^\\s]*)'),
-      color: XRegExp('clr:0x([0-9a-f]+)'),
-      timestamp: XRegExp('tm:(\\d+)'),
-    
-      parts: XRegExp('^[^\\S\\r\\n]*#', 'm'),
-      url: XRegExp('\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*)'),
-      author: XRegExp('^!\\[(\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*))\\]\\((?<imagea>.*)\\)|^(\\[(?<textc>.*)\\]\\((?<urlb>.*)\\)|(?<textd>.*))', 'n'),
-      title: XRegExp(`^ (\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*))\\n[^\\S\\r\\n]*(?<bodya>[^]*)`, 'n'),
-      field: XRegExp('(?<=.)(.*)\\n[^\\S\\r\\n]*([^]*)'),
-    }
-
     const [meta, body] = markdown.split(regex.meta);
     
     const image = XRegExp.exec(meta, regex.image)?.[1];
