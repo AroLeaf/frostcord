@@ -90,7 +90,7 @@ export default class Command {
 
   static args(args) {
     switch (args.constructor) {
-      case Array: return args.map(arg=>Commands.args(arg)[0]);
+      case Array: return args.map(arg=>Command.args(arg)[0]);
       case String: return [{ name: args.toLowerCase(), description: args}];
       default: {
         return [{
