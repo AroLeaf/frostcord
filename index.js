@@ -7,6 +7,8 @@ import _CommandManager from './src/CommandManager.js';
 import _CooldownManager from './src/CooldownManager.js';
 import _MessageContent from './src/MessageContent.js';
 import _Oauth from './src/Oauth.js';
+import _SlashBot from './src/SlashBot.js';
+import _StaticApplicationCommand from './src/StaticApplicationCommand.js';
 
 export default {
   ...Discord,
@@ -17,6 +19,8 @@ export default {
   CooldownManager: _CooldownManager,
   MessageContent: _MessageContent,
   Oauth: _Oauth,
+  SlashBot: _SlashBot,
+  StaticApplicationCommand: _StaticApplicationCommand,
 }
 
 export const Bot = _Bot;
@@ -26,3 +30,5 @@ export const CommandManager = _CommandManager;
 export const CooldownManager = _CooldownManager;
 export const MessageContent = _MessageContent;
 export const Oauth = _Oauth;
+export const SlashBot = _SlashBot;
+export const StaticApplicationCommand = _StaticApplicationCommand;

@@ -1,7 +1,6 @@
 export default class MessageContent {
-  constructor(data, options) {
+  constructor(data) {
     this.data = data;
-    this.options = options;
   }
 
   toMsg() {
@@ -9,13 +8,13 @@ export default class MessageContent {
   }
 
 
-  static embed(data, options) {
-    return new MessageContent({ embeds: [data] }, options);
+  static embed(embed, data) {
+    return new MessageContent({ ...data, embeds: [embed] });
   }
-  static embeds(data, options) {
-    return new MessageContent({ embeds: data }, options);
+  static embeds(embeds, data) {
+    return new MessageContent({ ...data, embeds });
   }
-  static content(data, options) {
-    return new MessageContent({ content: data }, options);
+  static content(content, data) {
+    return new MessageContent({ ...data, content });
   }
 }
