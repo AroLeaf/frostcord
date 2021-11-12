@@ -46,7 +46,7 @@ export default class EmbedFactory {
       image: { url: data.image },
       fields: data.fields,
       color: data.color || this.color,
-      footer: data.footer || args[0]?.splash!==false && this.randomSplash(),
+      footer: (data.footer?.text||data.footer?.icon_url)?data.footer:args[0]?.splash!==false && this.randomSplash(),
       timestamp: data.timestamp,
     }, ...args);
   }
