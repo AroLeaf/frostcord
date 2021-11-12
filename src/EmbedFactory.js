@@ -14,6 +14,7 @@ const regex = {
   thumbnail: XRegExp('tmb:([^\\s]*)'),
   color: XRegExp('clr:0x([0-9a-f]+)'),
   timestamp: XRegExp('tm:(\\d+)'),
+  footer: XRegExp('foot:(!\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*))', 'n'),
   author: XRegExp('aut:(!\\[(\\[(?<texta>.*)\\]\\((?<urla>.*)\\)|(?<textb>.*))\\]\\((?<imagea>.*)\\)|(\\[(?<textc>.*)\\]\\((?<urlb>.*)\\)|(?<textd>.*)))', 'n'),
 
   parts: XRegExp('^[^\\S\\r\\n]*#', 'm'),
@@ -45,7 +46,7 @@ export default class EmbedFactory {
       image: { url: data.image },
       fields: data.fields,
       color: data.color || this.color,
-      footer: data.footer || this.randomSplash(),
+      footer: data.footer || args[0]?.splash!==false && this.randomSplash(),
       timestamp: data.timestamp,
     }, ...args);
   }
@@ -57,6 +58,12 @@ export default class EmbedFactory {
     const thumbnail = XRegExp.exec(meta, regex.thumbnail)?.[1];
     const color = XRegExp.exec(meta, regex.color)?.[1];
     const timestamp = XRegExp.exec(meta, regex.timestamp)?.[1];
+    
+    const footerMatch = XRegExp.exec(meta, regex.footer);
+    const footer = {
+      text: footerMatch?.groups.texta || footerMatch?.groups.textb,
+      icon_url: footerMatch?.urla,
+    }
 
     const authorMatch = XRegExp.exec(meta, regex.author);
     const author = {
@@ -84,7 +91,7 @@ export default class EmbedFactory {
       image, thumbnail, color,
       timestamp: parseInt(timestamp||''),
       author, title, url, description,
-      fields,
+      fields, footer,
     }, ...args);
   }
 }
