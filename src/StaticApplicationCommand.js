@@ -21,6 +21,16 @@ export default class StaticApplicationCommand {
     return this.path ? Path.basename(Path.dirname(this.path)) : undefined;
   }
 
+  get data() {
+    return this._data;
+  }
+  set data(data) {
+    data = {...data};
+    delete data.permissions;
+    delete data.flags;
+    this._data = data;
+  }
+
   async run(interaction) {
     if (this.flags.has(1<<0) && !interaction.client.owners.includes(interaction.user.id)) return;
     if (this.flags.has(1<<1) && !interaction.guild) return interaction.embed('This command can only be used in a server.');
