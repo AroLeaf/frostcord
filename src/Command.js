@@ -69,7 +69,7 @@ export default class Command {
             }
             case 5:
             case '@?':
-            case'MEMBER_OR_USER': {
+            case'USERLIKE': {
               const match = input.match(/^(\d+)|<@!?(\d+)>$/);
               return await message.guild?.members.fetch(match?.[1] || match?.[2]).catch(()=>{}) 
                   || await message.client.users.fetch(match?.[1] || match?.[2]).catch(()=>{});
@@ -116,7 +116,7 @@ export default class Command {
 
   static options(options) {
     switch (options.constructor) {
-      case Array: return options.map(arg=>Command.args(arg)[0]);
+      case Array: return options.map(opt=>Command.options(opt)[0]);
       case String: return [{ name: options.toLowerCase(), description: options}];
       default: {
         return [{
