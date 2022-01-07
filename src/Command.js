@@ -36,7 +36,7 @@ export default class Command {
       for (const arg of this.options) {
         const input = args[parsed.size];
 
-        const choice = i => arg.choices ? arg.choices.find(c=>c.name===input)?.value : i;
+        const choice = i => arg.choices ? arg.choices.find(c=>c.name===i)?.value : i;
 
         const value = await (async () => {
           if (!input) return;
