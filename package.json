@@ -1,6 +1,7 @@
 {
-  "name": "puckcord",
+  "name": "@aroleaf/frostcord",
   "type": "module",
+  "version": "1.0.0",
   "exports": "./index.js",
   "dependencies": {
     "discord.js": "^13.1.0",
@@ -8,5 +9,9 @@
     "keyv": "^4.0.3",
     "node-fetch": "^3.0.0",
     "xregexp": "^5.1.0"
+  },
+  "author": {
+    "name": "Leaf",
+    "url": "https://leaf/moe"
   }
 }

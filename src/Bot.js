@@ -1,6 +1,5 @@
 import Discord from 'discord.js';
 import CommandManager from './CommandManager.js';
-import MessageContent from './MessageContent.js';
 import EmbedFactory from './EmbedFactory.js';
 
 export default class Bot extends Discord.Client {
@@ -35,7 +34,7 @@ export default class Bot extends Discord.Client {
   async _onMessageCreate(message) {
     const prefix = await this.prefix(message);
     if (message.author.bot || !message.content.startsWith(prefix)) {
-      if (RegExp(`<@!?${this.user.id}>`).test(message.content)) message.channel.send({ embeds: [{ description: `My prefix is \`${prefix}\`` }]});
+      if (RegExp(`<@!?${this.user.id}>`).test(message.content) && message.mentions.users.has(this.user.id)) message.channel.send({ embeds: [{ description: `My prefix is \`${prefix}\`` }]});
       return;
     };
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -44,7 +43,7 @@ export default class Bot extends Discord.Client {
 
     try {
       const res = await command.run(message, args);
-      if (res instanceof MessageContent) return message.channel.send(res.toMsg());
+      if (res.toMsg) return message.channel.send(res.toMsg());
     } catch (err) {
       console.log(err);
     }
